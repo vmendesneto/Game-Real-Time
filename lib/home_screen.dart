@@ -21,8 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           Expanded(
             child: Container(
-              //height: 80.0,
-              //width: double.infinity,
               color: thema.primaryColor,
               child: PageView(
                 controller: _pageController,
@@ -59,9 +57,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     BottomNavigationBar(
+                      type: BottomNavigationBarType.fixed,
                       showSelectedLabels: true,
                       showUnselectedLabels: true,
                       currentIndex: selectedIndex,
+                      backgroundColor: thema.backgroundColor,
                       unselectedItemColor: thema.primaryColor,
                       onTap: (index) {
                         _pageController.jumpToPage(index);
@@ -70,42 +70,37 @@ class _HomeScreenState extends State<HomeScreen> {
                       elevation: 0.0,
                       unselectedLabelStyle: thema.style,
                       selectedLabelStyle: thema.style,
-                      items: [
+                      items: const [
                         BottomNavigationBarItem(
-                          backgroundColor: thema.backgroundColor,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.person,
                             size: 23.3,
                           ),
                           label: 'Início',
                         ),
                         BottomNavigationBarItem(
-                          backgroundColor: thema.backgroundColor,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.extension,
                             size: 23.3,
                           ),
                           label: "Problemas",
                         ),
                         BottomNavigationBarItem(
-                          backgroundColor: thema.backgroundColor,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.face_retouching_natural,
                             size: 23.3,
                           ),
                           label: "Aprender",
                         ),
                         BottomNavigationBarItem(
-                          backgroundColor: thema.backgroundColor,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.settings_outlined,
                             size: 23.3,
                           ),
                           label: "Observar",
                         ),
                         BottomNavigationBarItem(
-                          backgroundColor: thema.backgroundColor,
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.menu,
                             size: 23.3,
                           ),
