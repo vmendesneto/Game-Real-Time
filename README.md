@@ -1,4 +1,4 @@
-# telas_projeto
+# game_real_time
 
 A new Flutter project.
 

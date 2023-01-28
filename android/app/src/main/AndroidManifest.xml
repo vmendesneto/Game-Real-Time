@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.telas_projeto">
+    package="com.example.game_real_time">
    <application
-        android:label="telas_projeto"
+        android:label="game_real_time"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
