@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:game_real_time/Providers/bola_provider.dart';
-import 'package:game_real_time/bola/bola_old.dart';
-
-import '../bola/bola_atual.dart';
 
 class CampoScreen extends ConsumerStatefulWidget {
   const CampoScreen({
@@ -15,11 +12,13 @@ class CampoScreen extends ConsumerStatefulWidget {
 }
 
 class _CampoScreenState extends ConsumerState<CampoScreen> {
+  double? x;
+  double? y;
+
   @override
   Widget build(BuildContext context) {
     final _width = MediaQuery.of(context).size.width;
     final _height = MediaQuery.of(context).size.height;
-    final bolaState = ref.watch(bolaProvider);
     final bola = ref.watch(bolaProvider.notifier);
 
     return Scaffold(
@@ -263,27 +262,50 @@ class _CampoScreenState extends ConsumerState<CampoScreen> {
                                       ])),
                                 ]))),
                   ]),
-                  const BolaAtual(),
+                  FutureBuilder(
+                      future: bola.buscar(),
+                      builder: (BuildContext context, snapshot) {
+                        //Map<String, dynamic> bola = snapshot.data!;
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                                color: Color(0xffF97316)),
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                                color: Color(0xffF97316)),
+                          );
+                        } else {
+                          x = snapshot.data!["xi"];
+                          y = snapshot.data!['yi'];
+                          return Align(
+                              alignment: Alignment(x!, y!),
+                              child: Container(
+                                  height: _height * 0.015,
+                                  width: _width * 0.033,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100),
+                                  )));
+                        }
+                      })
                   //bolasdif(context, ref),
-                  Container(
-                      height: 45,
-                      width: 100,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            setState(() {
-                              bola.mudar();
-                            });
-                          },
-                          child: Text("+"))),
+                  // Container(
+                  //     height: 45,
+                  //     width: 100,
+                  //     child: ElevatedButton(
+                  //         onPressed: () {
+                  //           setState(() {
+                  //             bola.mudar();
+                  //           });
+                  //         },
+                  //         child: Text("+"))),
                 ])))));
-  }
-}
-
-bolasdif(BuildContext context, WidgetRef ref) {
-  final bola = ref.watch(bolaProvider);
-  if (bola.y_atual != bola.y_old || bola.x_atual != bola.x_old) {
-    return const BolaOld();
-  } else {
-    return Container();
   }
 }
